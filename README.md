@@ -1,0 +1,2 @@
+# picosdk_mapfile_paser_py
+Pico SDKのマップファイルを解析するPythonスクリプト
