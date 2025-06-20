@@ -72,6 +72,8 @@ python picosdk_mapfile_parse.py [mapファイルのパス]
 
 ### 出力例 📊
 
+- 結果はプロンプトへの出力📺️とlogフォルダにログファイルを生成📚️
+
 ```shell
 C:\dev_work\git\my\rp2350_dev\src>python picosdk_mapfile_parse.py
 Pico SDK Map File Parser

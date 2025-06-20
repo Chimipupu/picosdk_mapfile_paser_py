@@ -1,7 +1,21 @@
 import sys
 import re
 import os
+import datetime
 from pathlib import Path
+
+class Tee:
+    def __init__(self, filename):
+        self.terminal = sys.stdout
+        self.logfile = open(filename, "w", encoding="utf-8")
+
+    def write(self, message):
+        self.terminal.write(message)
+        self.logfile.write(message)
+
+    def flush(self):
+        self.terminal.flush()
+        self.logfile.flush()
 
 def print_header():
     print("Pico SDK Map File Parser")
@@ -151,6 +165,15 @@ def parse_map_file(map_path):
         sys.exit(1)
 
 if __name__ == '__main__':
+    # ログファイルの準備
+    today_str = datetime.datetime.now().strftime('%Y%m%d')
+    script_dir = Path(__file__).parent
+    log_dir = script_dir / 'log'
+    log_dir.mkdir(exist_ok=True)  # フォルダ作成
+    log_file = log_dir / f'log_picosdk_map_parse_{today_str}.log'
+    sys.stdout = Tee(log_file)  # 標準出力を複製
+
+    # マップファイルの解析結果
     print_header()
     map_path = sys.argv[1] if len(sys.argv) > 1 else None
     map_path = find_map_file(map_path)
