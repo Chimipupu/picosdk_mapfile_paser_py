@@ -123,8 +123,9 @@ def parse_map_file(map_path):
                             break
 
         # 結果の表示
-        print(f'\n解析ファイル: {map_path}')
-        
+        print('\n【RP2040/RP2350 マップ解析スクリプト】\n')
+        print('Copyright (c) 2025 Chimipupu(https://github.com/Chimipupu)')
+        print(f'\nマップファイル: {map_path}')
         # フラッシュ使用量の表示
         print('\n=== フラッシュ使用量 ===')
         flash_total = sum(flash_sections.values())
@@ -133,7 +134,7 @@ def parse_map_file(map_path):
                 print(f'{section:15} {size:12,d} bytes ({size/1024:6.2f} KB)')
         print(f'合計使用量:     {flash_total:12,d} bytes ({flash_total/1024:6.2f} KB)')
         print(f'Flash容量:      {flash_capacity:12,d} bytes ({flash_capacity/1024/1024:6.2f} MB)')
-        print(f'使用率:         {(flash_total/flash_capacity*100):6.2f}%')
+        print(f'{"使用率:":15} {(flash_total/flash_capacity*100):6.2f}%')
 
         # RAM使用量の表示
         print('\n=== RAM使用量 ===')
@@ -143,7 +144,7 @@ def parse_map_file(map_path):
                 print(f'{section:15} {size:12,d} bytes ({size/1024:6.2f} KB)')
         print(f'合計使用量:     {ram_total:12,d} bytes ({ram_total/1024:6.2f} KB)')
         print(f'SRAM容量:       {ram_capacity:12,d} bytes ({ram_capacity/1024:6.2f} KB)')
-        print(f'使用率:         {(ram_total/ram_capacity*100):6.2f}%')
+        print(f'{"使用率:":15}  {(ram_total/ram_capacity*100):6.2f}%')
 
     except Exception as e:
         print(f'エラー: ファイルの処理中にエラーが発生しました: {str(e)}')

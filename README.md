@@ -73,31 +73,43 @@ python picosdk_mapfile_parse.py [mapファイルのパス]
 ### 出力例 📊
 
 ```shell
-C:\dev_work\git\my\picosdk_mapfile_paser_py>python picosdk_mapfile_parse.py
-
+C:\dev_work\git\my\rp2350_dev\src>python picosdk_mapfile_parse.py
 Pico SDK Map File Parser
 Copyright (c) 2025 Chimipupu(https://github.com/Chimipupu)
 
-探している場所: C:\dev_work\git\my\picosdk_mapfile_paser_py\src\build\*.map
-探している場所: C:\dev_work\git\my\picosdk_mapfile_paser_py\*.map
+探している場所: C:\dev_work\git\my\rp2350_dev\src\src\build\*.map
+探している場所: C:\dev_work\git\my\rp2350_dev\src\*.map
 
-解析ファイル: C:\dev_work\git\my\picosdk_mapfile_paser_py\rp2350_dev.elf.map
+【RP2040/RP2350 マップ解析スクリプト】
+
+Copyright (c) 2025 Chimipupu(https://github.com/Chimipupu)
+
+マップファイル: C:\dev_work\git\my\rp2350_dev\src\rp2350_dev.elf.map
 
 === フラッシュ使用量 ===
-.text                 46,064 bytes ( 44.98 KB)
-.rodata               16,852 bytes ( 16.46 KB)
+.text                 77,774 bytes ( 75.95 KB)
+.rodata               51,240 bytes ( 50.04 KB)
 .init                     20 bytes (  0.02 KB)
-.fini                     96 bytes (  0.09 KB)
-合計使用量:           63,032 bytes ( 61.55 KB)
+.fini                    112 bytes (  0.11 KB)
+.ARM.exidx                32 bytes (  0.03 KB)
+.comment               5,878 bytes (  5.74 KB)
+.debug_info          589,892 bytes (576.07 KB)
+.debug_abbrev        103,246 bytes (100.83 KB)
+.debug_aranges         7,088 bytes (  6.92 KB)
+.debug_line          324,835 bytes (317.22 KB)
+.debug_str           253,317 bytes (247.38 KB)
+合計使用量:        1,413,434 bytes (1380.31 KB)
 Flash容量:         4,194,304 bytes (  4.00 MB)
-使用率:           1.50%
+使用率:             33.70%
 
 === RAM使用量 ===
-.data                  4,896 bytes (  4.78 KB)
-.bss                   3,925 bytes (  3.83 KB)
-合計使用量:            8,821 bytes (  8.61 KB)
+.data                  5,476 bytes (  5.35 KB)
+.bss                   4,605 bytes (  4.50 KB)
+.stack                 8,192 bytes (  8.00 KB)
+.heap                  4,096 bytes (  4.00 KB)
+合計使用量:           22,369 bytes ( 21.84 KB)
 SRAM容量:            524,288 bytes (512.00 KB)
-使用率:           1.68%
+使用率:               4.27%
 ```
 
 ## 注意事項 ⚠️
