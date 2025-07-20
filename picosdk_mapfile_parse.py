@@ -86,14 +86,14 @@ def parse_map_file(map_path):
         '.ARM.extab': 0,         # ARM例外処理テーブル
         '.ARM.exidx': 0,         # ARM例外インデックス
         '.ARM.attributes': 0,    # ARM属性
-        '.comment': 0,           # コメント情報
-        '.debug_info': 0,        # デバッグ情報
-        '.debug_abbrev': 0,      # デバッグ省略情報
-        '.debug_loc': 0,         # デバッグ位置情報
-        '.debug_aranges': 0,     # デバッグアドレス範囲
-        '.debug_ranges': 0,      # デバッグ範囲情報
-        '.debug_line': 0,        # デバッグ行情報
-        '.debug_str': 0,         # デバッグ文字列
+        # '.comment': 0,           # コメント情報
+        # '.debug_info': 0,        # デバッグ情報
+        # '.debug_abbrev': 0,      # デバッグ省略情報
+        # '.debug_loc': 0,         # デバッグ位置情報
+        # '.debug_aranges': 0,     # デバッグアドレス範囲
+        # '.debug_ranges': 0,      # デバッグ範囲情報
+        # '.debug_line': 0,        # デバッグ行情報
+        # '.debug_str': 0,         # デバッグ文字列
     }
     ram_sections = {
         '.data': 0,              # 初期化済みデータ
