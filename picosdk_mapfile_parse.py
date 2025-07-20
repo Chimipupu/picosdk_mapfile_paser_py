@@ -25,45 +25,54 @@ def print_header():
 def find_map_file(map_path=None):
     # スクリプトの場所を基準にする
     script_dir = Path(__file__).parent
-    # print(f'スクリプトの場所: {script_dir}')
-    
+    parent_dir = script_dir.parent
+    print(f'スクリプトの場所: {script_dir}')
+    print(f'親ディレクトリ: {parent_dir}')
+
     if map_path is None:
-        # デフォルトの場所を探す
-        default_locations = [
-            script_dir / 'src' / 'build' / '*.map',            # /src/build内の任意のmapファイル
-            script_dir / '*.map',            # スクリプトと同じディレクトリ内の任意のmapファイル
-            script_dir.parent / 'build' / '*.map',            # 親ディレクトリのbuild内の任意のmapファイル
+        # 検索するディレクトリとパターンのリスト
+        search_locations = [
+            (script_dir, '*.map'),              # スクリプトディレクトリ直下
+            (script_dir, 'build/*.map'),        # スクリプトディレクトリ/build/
+            (script_dir, 'src/build/*.map'),    # スクリプトディレクトリ/src/build/
+            (parent_dir, '*.map'),              # 親ディレクトリ直下
+            (parent_dir, 'build/*.map'),        # 親ディレクトリ/build/
+            (parent_dir, 'src/build/*.map'),    # 親ディレクトリ/src/build/
+            (parent_dir, 'src/../build/*.map'), # 親ディレクトリの各サブディレクトリ/build/
         ]
-        
-        for location in default_locations:
-            print(f'探している場所: {location}')
-            if location.exists():
-                return str(location)
-            elif '*' in str(location):
-                # ワイルドカードの場合、最初に見つかったmapファイルを使用
-                map_files = list(Path(location.parent).glob('*.map'))
-                if map_files:
-                    return str(map_files[0])
-        
+
+        all_map_files = []
+        for base_dir, pattern in search_locations:
+            found_files = list(base_dir.glob(pattern))
+            all_map_files.extend(found_files)
+            print(f'検索: {base_dir / pattern}')
+            print(f'  見つかったファイル数: {len(found_files)}')
+            for file in found_files:
+                print(f'    -> {file}')
+
+        if all_map_files:
+            print(f'\n使用するファイル: {all_map_files[0]}')
+            return str(all_map_files[0])
         print('エラー: mapファイルが見つかりません。')
-        print('使用方法: python parse_map.py [mapファイルのパス]')
-        print('パスが指定されない場合、以下の場所を探します:')
-        for loc in default_locations:
-            print(f'  - {loc}')
+
+        # 実際にファイルが存在するか手動確認
+        print('\n手動確認:')
+        script_maps = list(script_dir.glob('*.map'))
+        parent_maps = list(parent_dir.glob('*.map'))
+        print(f'スクリプトディレクトリの.mapファイル: {script_maps}')
+        print(f'親ディレクトリの.mapファイル: {parent_maps}')
         sys.exit(1)
-    
+
     # 相対パスの場合は、スクリプトの場所からの相対パスとして解釈
     if not os.path.isabs(map_path):
         resolved_path = script_dir / map_path
-        # print(f'相対パスを解決: {map_path} -> {resolved_path}')
         map_path = str(resolved_path)
-    
+
     # パスの存在確認
     if not os.path.exists(map_path):
         print(f'エラー: ファイル {map_path} が見つかりません。')
         print('現在の作業ディレクトリ:', os.getcwd())
         sys.exit(1)
-    
     return map_path
 
 def parse_map_file(map_path):
@@ -120,16 +129,16 @@ def parse_map_file(map_path):
                 if m:
                     section = m.group(1)
                     size = int(m.group(2), 16)
-                    
+\
                     # メインセクションの判定
                     main_section = section.split('.')[1] if '.' in section else section
-                    
+
                     # フラッシュセクションの処理
                     for flash_section in flash_sections:
                         if section.startswith(flash_section):
                             flash_sections[flash_section] += size
                             break
-                    
+
                     # RAMセクションの処理
                     for ram_section in ram_sections:
                         if section.startswith(ram_section):
