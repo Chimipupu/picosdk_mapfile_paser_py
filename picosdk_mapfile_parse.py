@@ -26,15 +26,15 @@ def find_map_file(map_path=None):
     # スクリプトの場所を基準にする
     script_dir = Path(__file__).parent
     # print(f'スクリプトの場所: {script_dir}')
-    
+
     if map_path is None:
         # デフォルトの場所を探す
         default_locations = [
-            script_dir / 'src' / 'build' / '*.map',            # /src/build内の任意のmapファイル
-            script_dir / '*.map',            # スクリプトと同じディレクトリ内の任意のmapファイル
-            script_dir.parent / 'build' / '*.map',            # 親ディレクトリのbuild内の任意のmapファイル
+            script_dir / 'src' / 'build' / '*.map',                 # /src/build内の任意のmapファイル
+            script_dir / '*.map',                                   # スクリプトと同じディレクトリ内の任意のmapファイル
+            script_dir.parent / 'src' / '.' / 'build' / '*.map',    # 親ディレクトリのbuild内の任意のmapファイル
         ]
-        
+
         for location in default_locations:
             print(f'探している場所: {location}')
             if location.exists():
@@ -44,26 +44,25 @@ def find_map_file(map_path=None):
                 map_files = list(Path(location.parent).glob('*.map'))
                 if map_files:
                     return str(map_files[0])
-        
+
         print('エラー: mapファイルが見つかりません。')
         print('使用方法: python parse_map.py [mapファイルのパス]')
         print('パスが指定されない場合、以下の場所を探します:')
         for loc in default_locations:
             print(f'  - {loc}')
         sys.exit(1)
-    
+
     # 相対パスの場合は、スクリプトの場所からの相対パスとして解釈
     if not os.path.isabs(map_path):
         resolved_path = script_dir / map_path
         # print(f'相対パスを解決: {map_path} -> {resolved_path}')
         map_path = str(resolved_path)
-    
+
     # パスの存在確認
     if not os.path.exists(map_path):
         print(f'エラー: ファイル {map_path} が見つかりません。')
         print('現在の作業ディレクトリ:', os.getcwd())
         sys.exit(1)
-    
     return map_path
 
 def parse_map_file(map_path):
@@ -120,16 +119,16 @@ def parse_map_file(map_path):
                 if m:
                     section = m.group(1)
                     size = int(m.group(2), 16)
-                    
+\
                     # メインセクションの判定
                     main_section = section.split('.')[1] if '.' in section else section
-                    
+
                     # フラッシュセクションの処理
                     for flash_section in flash_sections:
                         if section.startswith(flash_section):
                             flash_sections[flash_section] += size
                             break
-                    
+
                     # RAMセクションの処理
                     for ram_section in ram_sections:
                         if section.startswith(ram_section):
